@@ -18,9 +18,11 @@
     </div>
   
     <div class="detalhes-usuario">
-      <div class="info">
-        Nome: <span>{usuario.nome}</span>
-      </div>
+      {#if usuario.nome}
+        <div class="info">
+          Nome: <span>{usuario.nome}</span>
+        </div>
+      {/if}
 
       <div class="info">
         Usuário: <span>{usuario.login}</span>
