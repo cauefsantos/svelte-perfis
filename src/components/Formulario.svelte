@@ -4,27 +4,48 @@
 
 	let valorInput = '';
 
+  let statusDeErro: null | number = null;
+
   const dispatch = createEventDispatcher<{
-    aoAlterarUsuario: IUsuario;  
+    aoAlterarUsuario: IUsuario | null;  
   }>();
 
   async function aoSubmeter() {
     const respostaUsuario = await fetch(`https://api.github.com/users/${valorInput}`);
-    const dadosUsuario = await respostaUsuario.json();
 
-    dispatch('aoAlterarUsuario', {
-      avatar_url: dadosUsuario.avatar_url,
-      login: dadosUsuario.login,
-      nome: dadosUsuario.name,
-      perfil_url: dadosUsuario.html_url,
-      repositorios_publicos: dadosUsuario.public_repos,
-      seguidores: dadosUsuario.followers,
-    });
+    if (respostaUsuario.ok) {
+      const dadosUsuario = await respostaUsuario.json();
+
+      dispatch('aoAlterarUsuario', {
+        avatar_url: dadosUsuario.avatar_url,
+        login: dadosUsuario.login,
+        nome: dadosUsuario.name,
+        perfil_url: dadosUsuario.html_url,
+        repositorios_publicos: dadosUsuario.public_repos,
+        seguidores: dadosUsuario.followers,
+      });
+
+      statusDeErro = null;
+    } else {
+      statusDeErro = respostaUsuario.status;
+
+      dispatch('aoAlterarUsuario', null)
+    }
 	}
 </script>
 
 <form on:submit|preventDefault={aoSubmeter}>
-  <input placeholder="Pesquise aqui o usuário" bind:value={valorInput} type="text" class="input">
+  <input
+    type="text"
+    placeholder="Pesquise aqui o usuário"
+    class="input"
+    class:erro-input={statusDeErro === 404}
+    bind:value={valorInput}
+  />
+
+  {#if statusDeErro === 404}
+    <span class="erro">Usuário não encontrado</span>
+  {/if}
 
   <div class="botao-container">
     <button class="botao" type="submit">Buscar</button>
@@ -49,6 +70,22 @@
     font-size: 19.5px;
     line-height: 26px;
     color: #6e8cba;
+  }
+
+  .erro {
+    position: absolute;
+    bottom: -25px;
+    left: 0;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    z-index: -1;
+    color: #ff003e;
+  }
+
+  .erro-input {
+    border-color: #ff003e;
   }
 
   .botao-container {

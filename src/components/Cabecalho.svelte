@@ -3,8 +3,9 @@
   import Titulo from '../components/Titulo.svelte';
 </script>
 
-<Titulo />
 <header>
+  <Titulo />
+  
   <div class="busca-usuario">
     <Formulario on:aoAlterarUsuario />
   </div>
