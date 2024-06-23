@@ -13,9 +13,9 @@
 
 
 <div class="app">
-	<header>
-		<Cabecalho on:aoAlterarUsuario={definirUsuario} />
-	</header>
+	
+  <Cabecalho on:aoAlterarUsuario={definirUsuario} />
+
 
   {#if usuario}
     <Usuario {usuario} />
@@ -25,11 +25,5 @@
 <style>
 	.app {
     max-height: 100vh;
-  }
-
-  header {    
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
   }
 </style>

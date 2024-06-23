@@ -4,12 +4,19 @@
 </script>
 
 <Titulo />
-
-<div class="busca-usuario">
-  <Formulario on:aoAlterarUsuario />
-</div>
+<header>
+  <div class="busca-usuario">
+    <Formulario on:aoAlterarUsuario />
+  </div>
+</header>
 
 <style>
+  header {    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   .busca-usuario {
     position: relative;
     width: 70%;
