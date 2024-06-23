@@ -1,6 +1,5 @@
 <script lang="ts">
-  import Formulario from './components/Formulario.svelte';
-	import Titulo from './components/Titulo.svelte';
+  import Cabecalho from './components/Cabecalho.svelte';
   import Usuario from './components/Usuario.svelte';
 	import type IUsuario from './interfaces/IUsuario';
 
@@ -15,11 +14,7 @@
 
 <div class="app">
 	<header>
-		<Titulo />
-
-		<div class="busca-usuario">
-      <Formulario on:aoAlterarUsuario={definirUsuario} />
-		</div>
+		<Cabecalho on:aoAlterarUsuario={definirUsuario} />
 	</header>
 
   {#if usuario}
@@ -36,10 +31,5 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-  }
-
-	.busca-usuario {
-    position: relative;
-    width: 70%;
   }
 </style>
